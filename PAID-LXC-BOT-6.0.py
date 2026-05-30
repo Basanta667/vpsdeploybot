@@ -16,7 +16,7 @@ import sqlite3
 import random
 # Load environment variables
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN', 'YOUR_BOT_TOKEN')
-BOT_NAME = os.getenv('BOT_NAME', 'UnixNodes')
+BOT_NAME = os.getenv('BOT_NAME', 'FakeCloud')
 PREFIX = os.getenv('PREFIX', '!')
 YOUR_SERVER_IP = os.getenv('YOUR_SERVER_IP', '127.0.0.1')
 MAIN_ADMIN_ID = int(os.getenv('MAIN_ADMIN_ID', '1210291131301101618'))
@@ -293,6 +293,17 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 bot = commands.Bot(command_prefix=PREFIX, intents=intents, help_command=None)
+
+LOG_CHANNEL_ID = 123456789012345678
+
+async def send_log(message):
+    channel = bot.get_channel(LOG_CHANNEL_ID)
+    if channel:
+        try:
+            await channel.send(message)
+        except Exception as e:
+            logger.error(f"Log send failed: {e}")
+
 # Resource monitoring settings (no auto-stop, only logging)
 resource_monitor_active = True
 # Helper function to truncate text to a specific length
@@ -309,9 +320,9 @@ def create_embed(title, description="", color=0x1a1a1a):
         description=truncate_text(description, 4096),
         color=color
     )
-    embed.set_thumbnail(url="https://i.imgur.com/Tv3clt0.jpeg")
+    embed.set_thumbnail(url="https://raw.githubusercontent.com/Basanta667/HowtosetuppterodactylwingsForFree/refs/heads/main/FakeCloud2.png")
     embed.set_footer(text=f"{BOT_NAME} VPS Manager • {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-                     icon_url="https://i.imgur.com/Tv3clt0.jpeg")
+                     icon_url="https://raw.githubusercontent.com/Basanta667/HowtosetuppterodactylwingsForFree/refs/heads/main/FakeCloud2.png")
     return embed
 def add_field(embed, name, value, inline=False):
     embed.add_field(
@@ -2472,7 +2483,7 @@ class HelpView(discord.ui.View):
             "system": "⚙️",
             "bot": "🤖"
         }
-        return emojis.get(category, "📁")
+        return emojis.get(category, "  ")
     async def select_callback(self, interaction: discord.Interaction):
         """Handle category selection"""
         if str(interaction.user.id) != str(self.ctx.author.id):
